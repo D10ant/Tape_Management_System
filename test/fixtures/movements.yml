@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tape_id: 1
+  date: 2014-01-14
+  from_location_id: 1
+  to_location_id: 1
+
+two:
+  tape_id: 1
+  date: 2014-01-14
+  from_location_id: 1
+  to_location_id: 1

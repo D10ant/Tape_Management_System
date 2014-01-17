@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tape ref:</strong>
+  <%= @tape.tape_ref %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @tape.customer_id %>
+</p>
+
+<%= link_to 'Edit', edit_tape_path(@tape) %> |
+<%= link_to 'Back', tapes_path %>
