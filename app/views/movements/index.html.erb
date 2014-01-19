@@ -1,0 +1,47 @@
+<h1>Listing Movements</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movement</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movements.each do |movement| %>
+      <tr>
+        <td><%= movement.movement %></td>
+        <td><%= link_to 'Show', movement %></td>
+        <td><%= link_to 'Edit', edit_location_path(movement) %></td>
+        <td><%= link_to 'Destroy', movement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Movement', new_movement_path %>
+
+<%= form_tag do %>
+<%= text_field_tag 'tape' %>
+<%= button_to_function "Add Tape", "addTape()" %>
+<%= select_tag(:tapes, options_for_select([]), {:multiple => true}) %>
+
+<% end %>
+
+<script type='text/javascript'>
+function addTape(){
+  var tape = document.getElementById('tape').value;
+  var tapes = document.getElementById('tapes');
+  var option = document.createElement("option");
+
+  option.text = tape;
+  tapes.add(option);
+
+  document.getElementById('tape').value = "";
+}
+</script>
