@@ -4,10 +4,10 @@ class TapesController < ApplicationController
   # GET /tapes
   # GET /tapes.json
   def index
-    #@tapes = Tape.all
-    @tapes = Tape.find(:all,
-                    :joins => 'LEFT OUTER JOIN customers ON customers.id = customer_id',
-                    :select => 'customers.customer_name as customer, tapes.*')
+    @tapes = Tape.all
+    #@tapes = Tape.find(:all,
+   #                :joins => 'LEFT OUTER JOIN customers ON customers.id = customer_id',
+    #                :select => 'customers.customer_name as customer, tapes.*')
     #@test = Tape.find(:all,
                   #:joins => [:b, :c],
                   #:select => 

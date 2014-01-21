@@ -26,12 +26,21 @@
 
 <%= link_to 'New Movement', new_movement_path %>
 
-<%= form_tag do %>
-<%= text_field_tag 'tape' %>
-<%= button_to_function "Add Tape", "addTape()" %>
-<%= select_tag(:tapes, options_for_select([]), {:multiple => true}) %>
 
-<% end %>
+<%= text_field_tag 'tape' %>
+<br>
+<%= button_to_function "Add Tape", "addTape()" %>
+<br>
+<%= select_tag(:tapes, options_for_select([]), {:multiple => true}) %>
+<br>
+<%= text_area_tag :test %>
+<br>
+<%= radio_button_tag(:status, "Removed") %>
+<%= label_tag(:status_removed, "Removed") %>
+<br>
+<%= radio_button_tag(:status, "Received") %>
+<%= label_tag(:status_received, "Received") %>
+
 
 <script type='text/javascript'>
 function addTape(){

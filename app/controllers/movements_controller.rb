@@ -13,4 +13,8 @@ class MovementsController < ApplicationController
 
 	end
 
+	def update
+		  render text: params[:movement].inspect
+	end
+
 end
