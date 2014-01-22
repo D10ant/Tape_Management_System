@@ -11,11 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140114142501) do
+ActiveRecord::Schema.define(version: 20140122161711) do
+
+  create_table "consignments", force: true do |t|
+    t.integer  "from_location_id"
+    t.integer  "to_location_id"
+    t.integer  "tape_id"
+    t.text     "security_tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "contents", force: true do |t|
+    t.integer  "tape_id"
+    t.integer  "consignments_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "customers", force: true do |t|
-    t.text     "customer_tla"
-    t.text     "customer_name"
+    t.text     "tla"
+    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -43,7 +59,7 @@ ActiveRecord::Schema.define(version: 20140114142501) do
   end
 
   create_table "tapes", force: true do |t|
-    t.text     "tape_ref"
+    t.text     "reference"
     t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
