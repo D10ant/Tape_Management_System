@@ -26,31 +26,18 @@
 
 <%= link_to 'New Movement', new_movement_path %>
 
+<%= label_tag(:from_location_tag, "From Location:") %>
+<%= select_tag(:from_location, options_for_select([])) %>
 
+<%= label_tag(:to_location_tag, "To Location:") %>
+<%= select_tag(:to_location, options_for_select([])) %>
+<br>  
 <%= text_field_tag 'tape' %>
 <br>
-<%= button_to_function "Add Tape", "addTape()" %>
-<br>
 <%= select_tag(:tapes, options_for_select([]), {:multiple => true}) %>
-<br>
-<%= text_area_tag :test %>
 <br>
 <%= radio_button_tag(:status, "Removed") %>
 <%= label_tag(:status_removed, "Removed") %>
 <br>
 <%= radio_button_tag(:status, "Received") %>
 <%= label_tag(:status_received, "Received") %>
-
-
-<script type='text/javascript'>
-function addTape(){
-  var tape = document.getElementById('tape').value;
-  var tapes = document.getElementById('tapes');
-  var option = document.createElement("option");
-
-  option.text = tape;
-  tapes.add(option);
-
-  document.getElementById('tape').value = "";
-}
-</script>

@@ -17,4 +17,8 @@ class MovementsController < ApplicationController
 		  render text: params[:movement].inspect
 	end
 
+	def new
+		@movement = Movement.new
+	end
+
 end

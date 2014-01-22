@@ -12,8 +12,21 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :movement %><br>
-    <%= f.text_area :movement %>
+    <%= label_tag(:from_location_tag, "From Location:") %>
+    <%= select_tag(:from_location, options_for_select([])) %>
+
+    <%= label_tag(:to_location_tag, "To Location:") %>
+    <%= select_tag(:to_location, options_for_select([])) %>
+    <br>  
+    <%= text_field_tag 'tape' %>
+    <br>
+    <%= select_tag(:tapes, options_for_select([]), {:multiple => true}) %>
+    <br>
+    <%= radio_button_tag(:status, "Removed") %>
+    <%= label_tag(:status_removed, "Removed") %>
+    <br>
+    <%= radio_button_tag(:status, "Received") %>
+    <%= label_tag(:status_received, "Received") %>
   </div>
   <div class="actions">
     <%= f.submit %>
