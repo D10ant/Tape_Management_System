@@ -14,8 +14,8 @@
   <tbody>
     <% @tapes.each do |tape| %>
       <tr>
-        <td><%= tape.tape_ref %></td>
-        <td><%= tape.customer.customer_name %></td>
+        <td><%= tape.reference %></td>
+        <td><%= tape.customer.name %></td>
         <td><%= link_to 'Show', tape %></td>
         <td><%= link_to 'Edit', edit_tape_path(tape) %></td>
         <td><%= link_to 'Destroy', tape, method: :delete, data: { confirm: 'Are you sure?' } %></td>
