@@ -11,12 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122161711) do
+ActiveRecord::Schema.define(version: 20140123180027) do
 
   create_table "consignments", force: true do |t|
     t.integer  "from_location_id"
     t.integer  "to_location_id"
-    t.integer  "tape_id"
     t.text     "security_tag"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -24,7 +23,7 @@ ActiveRecord::Schema.define(version: 20140122161711) do
 
   create_table "contents", force: true do |t|
     t.integer  "tape_id"
-    t.integer  "consignments_id"
+    t.integer  "consignment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

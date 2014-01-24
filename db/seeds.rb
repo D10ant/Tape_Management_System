@@ -9,3 +9,4 @@
 customers = Customer.create([{tla: 'ABC', name: 'AB Corporations'}, {tla: 'LUK', name: 'Logicalis UK'}])
 locations = Location.create([{location: 'Slough'}, {location: 'Bracknell'}])
 tapes = Tape.create([{reference: '123TAPE', customer_id: Customer.first.id}, {reference: '456Tape', customer_id: Customer.last.id}])
+movements = Movement.create([{tape_id: Tape.first.id, from_location_id: Location.first.id, to_location_id: Location.last.id}])

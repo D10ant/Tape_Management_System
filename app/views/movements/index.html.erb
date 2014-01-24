@@ -25,12 +25,14 @@
 <br>
 
 <%= link_to 'New Movement', new_movement_path %>
+<br>
+<% options = options_from_collection_for_select(@location, 'id', 'location') %>
 
 <%= label_tag(:from_location_tag, "From Location:") %>
-<%= select_tag(:from_location, options_for_select([])) %>
+<%= select_tag(:from_location, options) %>
 
 <%= label_tag(:to_location_tag, "To Location:") %>
-<%= select_tag(:to_location, options_for_select([])) %>
+<%= select_tag(:to_location, options) %>
 <br>  
 <%= text_field_tag 'tape' %>
 <br>

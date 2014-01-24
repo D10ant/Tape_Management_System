@@ -3,6 +3,7 @@ class MovementsController < ApplicationController
 
 	def index 
 		@movements = Inventory.all
+		@location = Location.all
 	end
 
 	def show
