@@ -20,6 +20,7 @@ class MovementsController < ApplicationController
 
 	def new
 		@movement = Movement.new
+		@location = Location.all
 	end
 
 end
