@@ -4,6 +4,7 @@ class MovementsController < ApplicationController
 	def index 
 		@movements = Inventory.all
 		@location = Location.all
+		@tapes = Tape.all
 	end
 
 	def show

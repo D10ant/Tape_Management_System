@@ -14,3 +14,9 @@ $(document).ready(function() {
 		}
 	})
 });
+
+function validateForm(){
+	$('#tapes').each(function(){
+		$('#tapes option').attr("selected","selected");
+	});
+}

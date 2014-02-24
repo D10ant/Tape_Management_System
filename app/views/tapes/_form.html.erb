@@ -12,14 +12,14 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :tape_ref %><br>
-    <%= f.text_area :tape_ref %>
+    <%= f.label :reference %><br>
+    <%= f.text_field :reference %>
   </div>
   <div class="field">
     <%= f.label :customer_id %><br>
     <% customer_hash = Hash.new(0)
     @customers.each do |customer| 
-      customer_hash[customer.customer_name] = customer.id
+      customer_hash[customer.name] = customer.id
     end %>
     <%= f.select(:customer_id, customer_hash) %>
   </div>
