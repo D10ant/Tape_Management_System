@@ -1,29 +1,33 @@
-<h1>Listing Consignments</h1>
+<h1>Current Consignments</h1>
 
-<table>
+<table class='table table-striped'>
   <thead>
     <tr>
-      <th>Tape ID</th>
-      <th>Location</th>
-      <th></th>
-      <th></th>
+      <th>Consignment ID</th>
+      <th>From Location</th>
+      <th>To Location</th>
+      <th>Tapes</th>
+      <th>Security Tag</th>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @tapes.each do |tape| %>
+    <% @consignments.each do |consignment| %>
       <tr>
-        <td><%= tape.reference %></td>
-        <td><%= tape.location.location %></td>
-        <td><%= link_to 'Show', tape %></td>
-        <td><%= link_to 'Edit', edit_location_path(tape) %></td>
-        <td><%= link_to 'Destroy', tape, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= consignment.id %></td>
+        <td><%= consignment.from_location.location %></td>
+        <td><%= consignment.to_location.location %></td>
+        <td><%= consignment.tapes.count %></td>
+        <td><%= consignment.security_tag %></td>
+        <td><%= link_to 'Show', consignment %></td>
+        <td><%= link_to 'Edit', edit_consignment_path(consignment) %></td>
+        <td><%= link_to 'Destroy', consignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
+  
 <%= link_to 'New Consignment', new_consignment_path %>

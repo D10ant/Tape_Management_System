@@ -2,7 +2,7 @@ class ConsignmentsController < ApplicationController
 	before_action :set_consignment, only: [:show, :edit, :update, :destroy]
 
 	def index 
-		@consignments = Inventory.all
+		@consignments = Consignment.all
 		@location = Location.all
 		@tapes = Tape.all
 	end
@@ -43,6 +43,14 @@ class ConsignmentsController < ApplicationController
 		@location = Location.all
 	end
 
+	def destroy
+		@consignment.destroy
+		respond_to do |format|
+			format.html { redirect_to consignment_url }
+			format.json { head :no_content }
+		end
+	end
+
 	private
     # Use callbacks to share common setup or constraints between actions.
     def set_consignment
@@ -51,6 +59,6 @@ class ConsignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def consignment_params
-    	params.require(:consignment).permit(:consignment_ref, :customer_id, :from_location_id, :to_location_id, :tapes => [])
+    	params.require(:consignment).permit(:consignment_ref, :customer_id, :from_location_id, :to_location_id, :security_tag, :tapes => [])
     end
 end

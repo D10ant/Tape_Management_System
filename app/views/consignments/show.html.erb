@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+	<strong>Consignment ID:</strong>
+	<%= @consignment.id %>
+</p>
+
+<p>
+	<strong>From Location:</strong>
+	<%= @consignment.from_location.location %>
+</p>
+<p>
+	<strong>To Location:</strong>
+	<%= @consignment.to_location.location %>
+</p>
+<p>
+	<strong>Security Tag:</strong>
+	<%= @consignment.security_tag %>
+</p>
+<p>
+	<strong>Tapes:</strong>
+	<%= 
+	@consignment.tapes.map do |tape|
+		tape.reference
+	end.join(', ')
+	%>
+</p>
+
+<%= link_to 'Edit', edit_consignment_path(@consignment) %> |
+<%= link_to 'Back', consignments_path %>

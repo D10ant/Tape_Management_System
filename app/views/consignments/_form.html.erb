@@ -17,12 +17,16 @@
     <%= f.label :from_location %>
     <%= f.select(:from_location_id, options) %>
 
-    <%= f.label :to_location%>
+    <%= f.label :to_location %>
     <%= f.select(:to_location_id, options) %>
     <br>  
+    <%= f.label :tapes %>
     <%= text_field_tag 'tape' %>
     <br>
     <%= select_tag(:tapes, options_for_select([]), {:multiple => true}) %>
+    <br>
+    <%= f.label :security_tag %>
+    <%= f.text_field :security_tag %>
   </div>
   <div class="actions">
     <%= f.submit %>
