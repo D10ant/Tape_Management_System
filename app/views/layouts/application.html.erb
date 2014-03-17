@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>BarcodeScanner</title>
+	<title>LUK Media Handling</title>
 	<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 	<%= csrf_meta_tags %>
+	<%= favicon_link_tag %>
 </head>
 <body>
+	
+	<%= nav_bar :fixed => :top, :brand => "LUK Media Handling", :brand_link => root_path do %>
+		<%= menu_group do %>
+			<%= menu_item "Home", root_path %>
+			<%= menu_item "Tapes", tapes_path %>
+			<%= menu_item "Consignments", consignments_path %>
+			<%= menu_item "Customers", customers_path %>
+			<%= menu_item "Locations", locations_path %>
+		<% end %>
+	<% end %>
+
 	<div class="container-fluid" role="main">
 		<%= yield %>
 	</div>
-
+	
 </body>
 </html>

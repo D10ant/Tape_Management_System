@@ -8,7 +8,6 @@
       <th>To Location</th>
       <th>Tapes</th>
       <th>Security Tag</th>
-      <th></th>
     </tr>
   </thead>
 
@@ -20,9 +19,9 @@
         <td><%= consignment.to_location.location %></td>
         <td><%= consignment.tapes.count %></td>
         <td><%= consignment.security_tag %></td>
-        <td><%= link_to 'Show', consignment %></td>
+        <td><%= link_to 'Details', consignment %></td>
         <td><%= link_to 'Edit', edit_consignment_path(consignment) %></td>
-        <td><%= link_to 'Destroy', consignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', consignment, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger'%></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +29,34 @@
 
 <br>
   
-<%= link_to 'New Consignment', new_consignment_path %>
+<%= link_to 'New Consignment', new_consignment_path, :class => 'btn btn-primary' %>
+
+<br>
+<hr>
+<h2>Closed consignments in the past 7 days</h2>
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th>Consignment ID</th>
+      <th>From Location</th>
+      <th>To Location</th>
+      <th>Tapes</th>
+      <th>Security Tag</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @consignments.where(:created_at => 1.week.ago..Time.now).each do |consignment| %>
+      <tr>
+        <td><%= consignment.id %></td>
+        <td><%= consignment.from_location.location %></td>
+        <td><%= consignment.to_location.location %></td>
+        <td><%= consignment.tapes.count %></td>
+        <td><%= consignment.security_tag %></td>
+        <td><%= link_to 'Details', consignment %></td>
+        <td><%= link_to 'Edit', edit_consignment_path(consignment) %></td>
+        <td><%= link_to 'Destroy', consignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -4,4 +4,12 @@
   Use Font Awesome icons (default)
   To use Glyphicons sprites instead of Font Awesome, replace with "require twitter-bootstrap-static/sprites"
   =require twitter-bootstrap-static/fontawesome
+  
   */
+
+@media (min-width: 980px) {
+  body {
+    padding: 60px;
+    padding-bottom: 42px;
+  }
+}

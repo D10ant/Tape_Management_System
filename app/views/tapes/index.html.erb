@@ -6,6 +6,7 @@
       <th>Tape ref</th>
       <th>Location</th>
       <th>Customer</th>
+      <th>In Transit</th>
     </tr>
   </thead>
 
@@ -15,6 +16,7 @@
         <td><%= tape.reference %></td>
         <td><%= tape.location.location %></td>
         <td><%= tape.customer.name %></td>
+        <td><%=  %></td>
       </tr>
     <% end %>
   </tbody>
