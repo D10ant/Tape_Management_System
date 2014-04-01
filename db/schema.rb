@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140123180027) do
+ActiveRecord::Schema.define(version: 20140318102549) do
 
   create_table "consignments", force: true do |t|
     t.integer  "from_location_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20140123180027) do
     t.text     "security_tag"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "in_transit"
   end
 
   create_table "contents", force: true do |t|

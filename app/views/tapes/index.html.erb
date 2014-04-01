@@ -6,7 +6,6 @@
       <th>Tape ref</th>
       <th>Location</th>
       <th>Customer</th>
-      <th>In Transit</th>
     </tr>
   </thead>
 
@@ -14,13 +13,16 @@
     <% @tapes.each do |tape| %>
       <tr>
         <td><%= tape.reference %></td>
-        <td><%= tape.location.location %></td>
+        <% if tape.consignments.order(updated_at: :desc).first.in_transit == true %>
+        <td><%= 'In Transit' %></td>
+        <% else %>
+        <td><%= tape.consignments.order(updated_at: :desc).first.to_location.location %></td>
+        <% end %>
         <td><%= tape.customer.name %></td>
-        <td><%=  %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br>
 
-<%= link_to 'New Tape', new_tape_path %>
+<%= link_to 'New Tape', new_tape_path, :class => 'btn btn-primary' %>

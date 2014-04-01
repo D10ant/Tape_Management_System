@@ -1,3 +1,10 @@
+<hr>
+<div>
+  Consignment <%= @consignment.id %> has <%= @consignment.tapes.count %> tape(s).
+  <br><br>
+  Please confirm the security tag of the consignment matches <b><%= @consignment.security_tag %></b>, and proceed to scan the tapes in.
+</div>
+<hr>
 <%= form_for(@consignment, :html => { :onsubmit => 'return validateForm()'}) do |f| %>
   <% if @consignment.errors.any? %>
     <div id="error_explanation">
@@ -11,16 +18,14 @@
     </div>
   <% end %>
   <%= error %>
-
-  <% options = options_from_collection_for_select(@location, 'id', 'location') %>
   
   <div class="field">
     <%= f.label :from_location %>
-    <%= f.select(:from_location_id, options) %>
+    <%= f.select(:from_location_id, Consignment.find(:all).collect {|c| [c.from_location.location, c.id]}, {}, html_options = {:disabled => true}) %>
   </div>
   <div class="field">
     <%= f.label :to_location %>
-    <%= f.select(:to_location_id, options, {}, :onChange=>"javascript: transitStatus();") %>
+    <%= f.select(:to_location_id, Consignment.find(:all).collect {|c| [c.to_location.location, c.id]}, {}, html_options = {:disabled => true}) %>
   </div>
   <div class="field">  
     <%= f.label :tapes %>
@@ -30,13 +35,9 @@
     <%= select_tag(:tapes, options_for_select([]), {:multiple => true}) %>
   </div>
   <div class="field">
-    <%= f.label :security_tag %>
-    <%= f.text_field :security_tag %>
-  </div>
-  <div class="field">
     <%= f.hidden_field :in_transit %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Check in consignment" %>
   </div>
 <% end %>

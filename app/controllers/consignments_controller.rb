@@ -12,11 +12,42 @@ class ConsignmentsController < ApplicationController
 	end
 
 	def edit
-
+		@location = Location.all
 	end
 
 	def update
-		render text: params[:consignment].inspect
+		#render text: params[:consignment].inspect
+		tapes = Array.new
+
+		@consignment.tapes.each do |tape|
+			tapes << tape.reference
+		end
+
+		unless params["tapes"].nil?
+			missing_tapes = tapes - params["tapes"]
+			unknown_tapes = params["tapes"] - tapes
+		end
+
+		unless missing_tapes.nil?
+			if missing_tapes.empty? && unknown_tapes.empty?
+
+				consignment_params = {"in_transit" => "f"}
+
+				respond_to do |format|
+					if @consignment.update(consignment_params)
+						format.html { redirect_to @consignment, notice: 'Tape was successfully updated.' }
+						format.json { head :no_content }
+					else
+						format.html { render action: 'edit' }
+						format.json { render json: @consignment.errors, status: :unprocessable_entity }
+					end
+				end
+			else
+				@consignment.errors["tapes"] = "Do not match. The following tapes are missing/shouldn't be in the consignment. Missing Tapes: #{missing_tapes.join(", ")}. Unknown Tapes: #{unknown_tapes.join(", ")}"
+				render 'edit'
+			end
+		end
+		
 	end
 
 	def create
@@ -51,6 +82,10 @@ class ConsignmentsController < ApplicationController
 		end
 	end
 
+	def transit
+		@@transit = [params[:transit]]
+	end
+
 	private
     # Use callbacks to share common setup or constraints between actions.
     def set_consignment
@@ -59,6 +94,6 @@ class ConsignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def consignment_params
-    	params.require(:consignment).permit(:consignment_ref, :customer_id, :from_location_id, :to_location_id, :security_tag, :tapes => [])
+    	params.require(:consignment).permit(:consignment_ref, :customer_id, :from_location_id, :to_location_id, :security_tag, :in_transit, :tapes => [])
     end
 end

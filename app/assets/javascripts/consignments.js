@@ -21,6 +21,20 @@ $(document).ready(function() {
 	});
 });
 
+function transitStatus(){
+	var location1 = $( '#consignment_from_location_id option:selected').text();
+	var location2 = $( '#consignment_to_location_id option:selected').text();
+
+	location1 = location1.split(" - ");
+	location2 = location2.split(" - ");
+
+	if (location1[0] != location2[0]){
+		 $( '#consignment_in_transit' ).val('true');
+	} else {
+		 $( '#consignment_in_transit' ).val('false');
+	}
+}
+
 function addTape(){
 	if ($( '#tape' ).val() != ""){
 		var tape = $( '#tape' ).val();
@@ -35,6 +49,10 @@ function addTape(){
 		$( '#tape' ).val("");
 		$( '#tape' ).focus();
 	}
+}
+
+function getSecurityTag(){
+	var securityTag = prompt("Please enter the security tag","");
 }
 
 function validateForm(){

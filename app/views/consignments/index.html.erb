@@ -1,4 +1,4 @@
-<h1>Current Consignments</h1>
+<h1>Consignments in transit</h1>
 
 <table class='table table-striped'>
   <thead>
@@ -8,32 +8,33 @@
       <th>To Location</th>
       <th>Tapes</th>
       <th>Security Tag</th>
+      <th>In Transit</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @consignments.each do |consignment| %>
+    <% @consignments.where(:in_transit => true).each do |consignment| %>
       <tr>
         <td><%= consignment.id %></td>
         <td><%= consignment.from_location.location %></td>
         <td><%= consignment.to_location.location %></td>
         <td><%= consignment.tapes.count %></td>
         <td><%= consignment.security_tag %></td>
+        <td><%= consignment.in_transit %></td>
         <td><%= link_to 'Details', consignment %></td>
-        <td><%= link_to 'Edit', edit_consignment_path(consignment) %></td>
+        <td><%= link_to 'Check in consignment', edit_consignment_path(consignment) %></td>
         <td><%= link_to 'Destroy', consignment, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger'%></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-  
 <%= link_to 'New Consignment', new_consignment_path, :class => 'btn btn-primary' %>
+<%= link_to 'Check in tapes', new_consignment_path, :class => 'btn', :onClick => 'javascript: getSecurityTag();' %>
 
 <br>
 <hr>
-<h2>Closed consignments in the past 7 days</h2>
+<h2>Consignments created in the past 7 days</h2>
 <table class='table table-striped'>
   <thead>
     <tr>
@@ -55,7 +56,7 @@
         <td><%= consignment.security_tag %></td>
         <td><%= link_to 'Details', consignment %></td>
         <td><%= link_to 'Edit', edit_consignment_path(consignment) %></td>
-        <td><%= link_to 'Destroy', consignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', consignment, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
