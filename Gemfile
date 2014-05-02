@@ -39,6 +39,9 @@ gem 'espinita'
 # Devise for authentication
 gem 'devise'
 
+# Judge for client side validation
+gem 'judge'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

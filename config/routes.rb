@@ -1,4 +1,5 @@
 BarcodeScanner::Application.routes.draw do
+  mount Judge::Engine => '/judge'
   devise_for :users
   resources :locations
 
