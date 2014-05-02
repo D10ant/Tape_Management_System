@@ -1,3 +1,10 @@
+<% unless success.nil? %>
+  <div class='alert alert-success'>
+   <a href='#' data-dismiss='alert' class='close'>x</a>
+   <%= success %>
+  </div>
+<% end %>
+
 <h1>Consignments in transit</h1>
 
 <table class='table table-striped'>

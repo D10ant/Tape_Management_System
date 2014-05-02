@@ -19,6 +19,11 @@ $(document).ready(function() {
 			addTape();
 		}
 	});
+
+	$('#remove_tape').click(function (event){
+		 $("#tapes option:selected").remove();
+		 event.preventDefault();
+	});
 });
 
 function transitStatus(){

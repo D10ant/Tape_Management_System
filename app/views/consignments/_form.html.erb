@@ -29,6 +29,9 @@
   <div class="field">
     <%= select_tag(:tapes, options_for_select([]), {:multiple => true}) %>
   </div>
+  <div class="actions">
+    <%= link_to 'Remove Tape', '#', :class => 'btn btn-mini btn-danger', :id => 'remove_tape' %>
+  </div>
   <div class="field">
     <%= f.label :security_tag %>
     <%= f.text_field :security_tag %>

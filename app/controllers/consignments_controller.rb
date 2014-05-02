@@ -60,8 +60,12 @@ class ConsignmentsController < ApplicationController
 
 		respond_to do |format|
 			if @consignment.save
-				format.html { redirect_to @consignment, notice: 'Consignment was successfully created.' }
-				format.json { render action: 'show', status: :created, location: @consignment }
+				format.html {
+					redirect_to consignments_path,
+					success: "Consignment Successfully Created!"
+				}
+				#format.html { redirect_to @consignment, notice: 'Consignment was successfully created.' }
+				#format.json { render action: 'show', status: :created, location: @consignment }
 			else
 				format.html { render action: 'new' }
 				format.json { render json: @consignment.errors, status: :unprocessable_entity }
