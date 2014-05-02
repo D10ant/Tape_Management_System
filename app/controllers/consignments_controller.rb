@@ -35,7 +35,7 @@ class ConsignmentsController < ApplicationController
 
 				respond_to do |format|
 					if @consignment.update(consignment_params)
-						format.html { redirect_to @consignment, notice: 'Tape was successfully updated.' }
+						format.html { redirect_to consignments_path, success: 'Tape was successfully updated.' }
 						format.json { head :no_content }
 					else
 						format.html { render action: 'edit' }
@@ -60,9 +60,7 @@ class ConsignmentsController < ApplicationController
 
 		respond_to do |format|
 			if @consignment.save
-				format.html {
-					redirect_to consignments_path,
-					success: "Consignment Successfully Created!"
+				format.html { redirect_to consignments_path, success: "Consignment Successfully Created!"
 				}
 				#format.html { redirect_to @consignment, notice: 'Consignment was successfully created.' }
 				#format.json { render action: 'show', status: :created, location: @consignment }
