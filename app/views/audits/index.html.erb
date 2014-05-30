@@ -1,0 +1,42 @@
+<h1>Tape History</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Date change made</th>
+			<th>Changes Made</th>
+			<th>Changes made by..</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% @tape.consignments.each do |consignment| %>
+			<% consignment.audits.each do |audit| %>
+				<tr>
+					<td><%= audit.created_at %></td>
+					<td>
+					<% audit.audited_changes.each do |key,value| %>
+						<% if key == :to_location_id %>
+							<strong><%= 'To Location:' %></strong>
+							<%= @locations.find_by_id(value).location %><br>
+						<% elsif key == :security_tag %>
+							<strong><%= 'Security Tag:' %></strong>
+							<%= value.last %><br>
+						<% elsif key == :from_location_id %>
+							<strong><%= 'From Location:' %></strong>
+							<%= @locations.find_by_id(value).location %><br>
+						<% elsif key == :in_transit %>
+							<% if value.last == false %>
+								<strong><%= 'Tape checked in' %></strong><br>
+							<% else %>
+								<strong><%= 'Tape In Transit' %></strong><br>
+							<% end %>
+						<% end %>
+					<% end %>
+					</td>
+					<td><%= audit.user.email %></td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table

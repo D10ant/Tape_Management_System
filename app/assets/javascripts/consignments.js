@@ -2,6 +2,7 @@ $(document).ready(function() {
 	$('#tapes').focus(function() {
 		var options = $('#tapes option');
 
+
 		var values = $.map(options ,function(option) {
 			return option.value;
 		});
@@ -15,6 +16,7 @@ $(document).ready(function() {
 			}
 		});
 
+		
 		if(window.exists != 1){
 			addTape();
 		}
@@ -24,27 +26,31 @@ $(document).ready(function() {
 		 $("#tapes option:selected").remove();
 		 event.preventDefault();
 	});
+
+	$('#tape-add-no').click(function (event){
+		var x = document.getElementById("tapes");
+		if (x.length>0) {
+  			x.remove(x.length-1);
+  		}
+	})
+
+	$('#tape-add').click(function (event){
+		var tape = $('#tapes option:last-child').val();
+		var customer = $("#customer").val();
+		console.log(customer);
+		createTape(tape, customer);
+
+	})
 });
-
-function transitStatus(){
-	var location1 = $( '#consignment_from_location_id option:selected').text();
-	var location2 = $( '#consignment_to_location_id option:selected').text();
-
-	location1 = location1.split(" - ");
-	location2 = location2.split(" - ");
-
-	if (location1[0] != location2[0]){
-		 $( '#consignment_in_transit' ).val('true');
-	} else {
-		 $( '#consignment_in_transit' ).val('false');
-	}
-}
 
 function addTape(){
 	if ($( '#tape' ).val() != ""){
+			
 		var tape = $( '#tape' ).val();
 		var tapes = $( '#tapes' )[0];
 		var option = document.createElement("option");
+
+		validateTape(tape);
 
 		option.text = tape;
 		tapes.add(option);
@@ -63,5 +69,40 @@ function getSecurityTag(){
 function validateForm(){
 	$('#tapes').each(function(){
 		$('#tapes option').attr("selected","selected");
+	});
+}
+
+//code modified from http://stackoverflow.com/questions/5815687/check-username-availability
+function validateTape(tape){
+	$.get('/consignments/checktape', {
+		tape: tape
+	}).success(function(data) {
+		if(data == 'true'){
+
+		} else {
+			$( "#unknown-tape" ).trigger( "click" );
+		}
+
+	}).error(function() {
+		$this.addClass('');
+	});
+}
+
+function createTape(tape_ref, customer){
+	console.log(tape_ref);
+	console.log(customer);
+
+	$.ajax({
+		url: "/tapes",
+		type: "POST",
+		data: { 
+			tape: {
+				reference: tape_ref,
+				customer_id: customer
+			}
+		},
+		success: function(data){
+			alert('Tape ' + tape_ref + ' successfully added');
+		}
 	});
 }

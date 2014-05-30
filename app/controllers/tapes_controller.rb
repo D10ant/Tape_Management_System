@@ -1,5 +1,7 @@
 class TapesController < ApplicationController
   before_action :set_tape, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
+  skip_before_filter :verify_authenticity_token
 
   # GET /tapes
   # GET /tapes.json
@@ -71,6 +73,6 @@ class TapesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tape_params
-      params.require(:tape).permit(:tape_ref, :customer_id)
+      params.require(:tape).permit(:reference, :customer_id)
     end
 end

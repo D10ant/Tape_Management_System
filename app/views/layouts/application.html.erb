@@ -13,8 +13,7 @@
 	<%= nav_bar :fixed => :top, :brand => "LUK Media Handling", :brand_link => root_path do %>
 		<% if current_user %>
 			<%= menu_group do %>
-				<%= menu_item "Home", root_path %>
-				<%= menu_item "Tapes", tapes_path %>
+				<%= menu_item "Tapes", root_path %>
 				<%= drop_down "Consignments" do %>
 					<%= menu_item "View all", consignments_path %>
 					<%= menu_item "Create new", new_consignment_path %>
@@ -33,6 +32,10 @@
 	<div class="container-fluid" role="main">
 		<%= yield %>
 	</div>
-	
+	<footer>
+		<div class="navbar navbar-fixed-bottom">
+			<%= image_tag('logicalis_logo_tiny.png') %>
+		</div>
+	</footer?
 </body>
 </html>

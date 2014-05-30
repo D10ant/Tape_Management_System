@@ -14,17 +14,17 @@
 
   <% options = options_from_collection_for_select(@location, 'id', 'location') %>
   
-  <div class="field">
+  <!--<div class="field">
     <%= f.label :from_location %>
     <%= f.select(:from_location_id, options) %>
-  </div>
+  </div>-->
   <div class="field">
     <%= f.label :to_location %>
     <%= f.select(:to_location_id, options, {}, :onChange=>"javascript: transitStatus();") %>
   </div>
   <div class="field">  
     <%= f.label :tapes %>
-    <%= text_field_tag 'tape' %>
+    <%= text_field_tag('tape', '', :'data-validate' => '/consignments/checktape') %>
   </div>
   <div class="field">
     <%= select_tag(:tapes, options_for_select([]), {:multiple => true}) %>
@@ -32,6 +32,7 @@
   <div class="actions">
     <%= link_to 'Remove Tape', '#', :class => 'btn btn-mini btn-danger', :id => 'remove_tape' %>
   </div>
+  <br>
   <div class="field">
     <%= f.label :security_tag %>
     <%= f.text_field :security_tag %>
@@ -43,3 +44,19 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+
+<a href="#myModal" role="button" class="btn" data-toggle="modal" id="unknown-tape" style="display:none"></a>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <h3 id="myModalLabel">Tape Doesn't Exist</h3>
+  </div>
+  <div class="modal-body">
+    <p>Tape doesn't exist. If you would like to add it to the database, please select a customer and click 'Save Changes'.</p>
+    <%= select_tag "customer", options_from_collection_for_select(@customer, "id", "name") %>
+  </div>
+  <div class="modal-footer">
+    <button id="tape-add-no"class="btn" data-dismiss="modal" aria-hidden="true" >Close</button>
+    <button id="tape-add" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+  </div>
+</div>

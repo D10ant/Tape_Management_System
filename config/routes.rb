@@ -5,9 +5,15 @@ BarcodeScanner::Application.routes.draw do
 
   resources :customers
 
-  resources :tapes
+  resources :tapes do
+    resources :history, controller: 'audits'
+  end
 
-  resources :consignments
+  resources :consignments do
+    collection do
+      get 'checktape'
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
