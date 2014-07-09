@@ -57,10 +57,8 @@ class ConsignmentsController < ApplicationController
 
 		@location = Location.all
 		@customer = Customer.all
-
-		location_match = true
 		
-		consignment_validation(params["tapes"])
+		location_match = consignment_validation(params["tapes"])
 
 		@consignment.errors
 
@@ -122,6 +120,7 @@ class ConsignmentsController < ApplicationController
     end
 
     def consignment_validation(tapes)
+    	location_match = true
     	tapes.each do |c|
 			t = Tape.find_by_reference(c)
 			@consignment.tapes << t if t
@@ -149,14 +148,18 @@ class ConsignmentsController < ApplicationController
 			@consignment.in_transit = true
 		end
 
-		if @consignment.security_tag == ""
-			location_match = false
-			@consignment.errors.add(:security_tag, "cannot be blank when moving from sites.") unless location_1[0] == location_2[0]
+		unless location_1[0] == location_2[0]
+			if @consignment.security_tag == ""
+				location_match = false
+				@consignment.errors.add(:security_tag, "cannot be blank when moving from sites.") 
+			end
 		end
 
 		if @consignment.from_location_id == @consignment.to_location_id
 			@consignment.errors.add(:tapes, "already at this location.")
 			location_match = false
 		end
+
+		return location_match
     end
 end

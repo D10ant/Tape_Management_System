@@ -2,25 +2,25 @@ $(document).ready(function() {
 	$('#tapes').focus(function() {
 		var options = $('#tapes option');
 
-
 		var values = $.map(options ,function(option) {
 			return option.value;
 		});
 
 		$.each( values, function( optionId, optionVal ) {
 			if($('#tape').val() == (optionVal)){
-				var exists = 1;
+				window.exists = 1;
 				alert('Tape already added');
 				$('#tape').val("");
 				$( '#tape' ).focus();
 			}
 		});
 
-		
 		if(window.exists != 1){
-			addTape();
+			addTape();	
 		}
+		window.exists = 0;
 	});
+
 
 	$('#remove_tape').click(function (event){
 		 $("#tapes option:selected").remove();

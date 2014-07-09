@@ -1,4 +1,4 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
 	$('#tapes').on( 'keyup', function( e ) {
 		var key = e.keyCode || e.which
 		if ((key == 9) && ($( '#tape' ).val() != "")){
@@ -13,4 +13,4 @@ $(document).ready(function() {
 			$( '#tape' ).focus();
 		}
 	})
-});
+});*/

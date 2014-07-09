@@ -1,8 +1,13 @@
 <h1>Tape History</h1>
-
+<%= form_for(@tape) do |f| %>
+	<%= select_month(Date.today) %>
+	<%= select_year(Date.today, :start_year => Date.today.year) %><br>
+	<%= link_to 'Export Data', tape_history_index_path(:format => :csv) %>
+<% end %> 
 <table class="table table-striped">
 	<thead>
 		<tr>
+			<th>ID</th>
 			<th>Date change made</th>
 			<th>Changes Made</th>
 			<th>Changes made by..</th>
@@ -10,15 +15,21 @@
 	</thead>
 
 	<tbody>
-		<% @tape.consignments.each do |consignment| %>
-			<% consignment.audits.each do |audit| %>
+		<% @tape.consignments.order('created_at desc').each do |consignment| %>
+			<% consignment.audits.order('created_at desc').each do |audit| %>
 				<tr>
+					<td><%= audit.auditable_id %>
 					<td><%= audit.created_at %></td>
 					<td>
 					<% audit.audited_changes.each do |key,value| %>
 						<% if key == :to_location_id %>
 							<strong><%= 'To Location:' %></strong>
 							<%= @locations.find_by_id(value).location %><br>
+							<% if @locations.find_by_id(value).location.split(' - ')[1] == 'Tape Library' %>
+								<%= 'test' %>
+							<% else %>
+								<%= 'fail' %>
+							<% end %>
 						<% elsif key == :security_tag %>
 							<strong><%= 'Security Tag:' %></strong>
 							<%= value.last %><br>
@@ -27,7 +38,8 @@
 							<%= @locations.find_by_id(value).location %><br>
 						<% elsif key == :in_transit %>
 							<% if value.last == false %>
-								<strong><%= 'Tape checked in' %></strong><br>
+								<strong><%= "Tape checked in at #{consignment.to_location.location}" %></strong><br>
+								<%=  %>
 							<% else %>
 								<strong><%= 'Tape In Transit' %></strong><br>
 							<% end %>

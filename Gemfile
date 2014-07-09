@@ -36,6 +36,9 @@ gem 'twitter-bootstrap-rails'
 # Espinita for auditing models
 gem 'espinita'
 
+# Gem to use bootswatch themes
+gem 'bootswatch-rails'
+
 # Devise for authentication
 gem 'devise'
 
