@@ -45,6 +45,9 @@ gem 'devise'
 # Judge for client side validation
 gem 'judge'
 
+#Haml for templating
+gem 'haml'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

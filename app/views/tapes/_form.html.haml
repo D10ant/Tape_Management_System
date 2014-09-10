@@ -1,0 +1,22 @@
+=form_for(@tape) do |f|
+  -if @tape.errors.any?
+    %div#error_explanation
+      %h2= #{pluralize(@tape.errors.count, "error")} prohibited this tape from being saved:
+      =debug(@tapes)
+      %ul
+        -@tape.errors.full_messages.each do |msg|
+          %li= msg
+
+  %div.field
+    =f.label :reference
+    =f.text_field :reference
+
+  %div.field
+    =f.label :customer_id
+    -customer_hash = Hash.new(0)
+    -@customers.each do |customer|
+      -customer_hash[customer.name] = customer.id
+    =f.select(:customer_id, customer_hash)
+
+  %div.actions
+    =f.submit

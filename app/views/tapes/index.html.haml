@@ -1,0 +1,27 @@
+%h1 Tape Locations
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Tape ref
+      %th Location
+      %th Customer
+      %th History
+
+  %tbody
+    -@tapes.each do |tape|
+      %tr
+        %td= tape.reference
+        -if tape.consignments.count != 0
+          -if tape.consignments.order(updated_at: :desc).first.in_transit == true
+            %td In Transit
+          -else
+            %td= tape.consignments.order(updated_at: :desc).first.to_location.location
+        -else
+          %td Unassigned
+        %td= tape.customer.name
+        %td= link_to "Tape History", "/tapes/#{tape.id}/history"
+
+%br
+
+=link_to 'New Tape', new_tape_path, :class => 'btn btn-primary'
