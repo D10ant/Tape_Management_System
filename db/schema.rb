@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140502133837) do
+ActiveRecord::Schema.define(version: 20141023144003) do
 
   create_table "consignments", force: true do |t|
     t.integer  "from_location_id"
@@ -80,7 +80,11 @@ ActiveRecord::Schema.define(version: 20140502133837) do
     t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
+    t.string   "deleted_by"
   end
+
+  add_index "tapes", ["deleted_at"], name: "index_tapes_on_deleted_at"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

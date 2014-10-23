@@ -1,0 +1,19 @@
+%h1 Deleted Tapes
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Tape ref
+      %th Location
+      %th Customer
+      %th Deleted At
+      %th Deleted By
+
+  %tbody
+    -@tapes.each do |tape|
+      %tr
+        %td= tape.reference
+        %td= tape.location.location
+        %td= tape.customer.name
+        %td= tape.deleted_at
+        %td= tape.deleted_by

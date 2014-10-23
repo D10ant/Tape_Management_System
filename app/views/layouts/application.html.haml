@@ -13,8 +13,8 @@
 				=menu_group do
 					=drop_down "Tapes" do
 						= menu_item "View all", root_path
+						= menu_item "Deleted Tapes", deleted_tapes_path
 						= menu_item "Add Tapes", new_tape_path
-						= menu_item "Import Tapes", import_tapes_path
 					=drop_down "Consignments" do
 						= menu_item "View all", consignments_path
 						= menu_item "Create new", new_consignment_path

@@ -8,6 +8,7 @@ class Tape < ActiveRecord::Base
 	has_many :contents, :foreign_key => :tape_id
 	has_many :consignments, :through => :contents
 
+	acts_as_paranoid
 	auditable
 	#def location
 	#	Consignment.where('tape_id = ?', id).order(date: :desc).first.to_location

@@ -121,6 +121,8 @@ class TapesController < ApplicationController
   # DELETE /tapes/1
   # DELETE /tapes/1.json
   def destroy
+    @tape.deleted_by = current_user.email
+    @tape.save
     @tape.destroy
     respond_to do |format|
       format.html { redirect_to tapes_url }
@@ -131,6 +133,10 @@ class TapesController < ApplicationController
   def import
     Tape.import(params[:file])
     redirect_to root_url, success: "Tapes Imported"
+  end
+
+  def deleted
+    @tapes = Tape.only_deleted
   end
 
   private
