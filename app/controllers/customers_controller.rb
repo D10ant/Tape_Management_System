@@ -10,6 +10,7 @@ class CustomersController < ApplicationController
   # GET /customers/1
   # GET /customers/1.json
   def show
+    @tapes = Tape.where(customer_id: params[:id])
   end
 
   # GET /customers/new

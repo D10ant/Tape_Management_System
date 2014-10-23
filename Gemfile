@@ -53,6 +53,16 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'roo'
+
+gem 'debugger'
+
+#Soft deletes items
+gem "paranoia", "~> 2.0"
+
+#Acts_as_paranoid is used to soft delete tapes
+#gem 'acts_as_paranoid'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

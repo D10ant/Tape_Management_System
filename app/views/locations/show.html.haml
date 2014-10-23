@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %strong Location:
+  = @location.location
+
+%p
+  %strong Tapes at this location:
+  %br
+  - @tapes.each do |tape|
+    - if tape.location.id == @location.id
+      = tape.reference
+      %br
+
+
+= link_to 'Edit', edit_location_path(@location)
+|
+= link_to 'Back', locations_path

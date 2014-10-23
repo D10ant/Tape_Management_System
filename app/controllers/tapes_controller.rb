@@ -23,27 +23,90 @@ class TapesController < ApplicationController
   # GET /tapes/1/edit
   def edit
     @customers = Customer.all
+    @locations = Location.all
   end
 
   # POST /tapes
   # POST /tapes.json
   def create
-    @tape = Tape.new(tape_params)
+    Rails.logger = Logger.new(STDOUT)
+    Rails.logger.debug tape_params.inspect
+    #@tape = Tape.new(tape_params)
+
+    params["tape"]["reference"].each do |reference|
+      unless reference == ''
+        @tape = Tape.new(:reference => reference, :customer_id => tape_params['customer_id'])
+        @tape.save
+      end
+    end
 
     respond_to do |format|
       if @tape.save
-        format.html { redirect_to @tape, notice: 'Tape was successfully created.' }
+        format.html { redirect_to tapes_path, success: "Tape Successfully Added!" }
         format.json { render action: 'show', status: :created, location: @tape }
       else
         format.html { render action: 'new' }
         format.json { render json: @tape.errors, status: :unprocessable_entity }
       end
     end
+
+    #@location = Location.all
+    #@customer = Customer.all
+
+    #location_match = consignment_validation(params["tapes"])
+
+    #@consignment.errors
+
+    #!!TODO!! Figure out a way to write this better. Not Dry.
+    #respond_to do |format|
+    #  if location_match != false
+    #    if @consignment.save
+    #      format.html { redirect_to consignments_path, success: "Consignment Successfully Created!" }
+    #      format.json { render action: 'show', status: :created, location: @consignment }
+    #    else
+    #      format.html { render action: 'new' }
+    #      format.json { render json: @consignment.errors, status: :unprocessable_entity }
+    #    end
+    #  else
+    #    format.html { render action: 'new' }
+    #    format.json { render json: @consignment.errors, status: :unprocessable_entity }
+    #  end
+    #end
+
+
+
+
+
+    #@tape = Tape.new(tape_params)
+
+    #respond_to do |format|
+    #  if @tape.save
+    #    format.html { redirect_to @tape, notice: 'Tape was successfully created.' }
+    #    format.json { render action: 'show', status: :created, location: @tape }
+    #  else
+    #    format.html { render action: 'new' }
+    #    format.json { render json: @tape.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   # PATCH/PUT /tapes/1
   # PATCH/PUT /tapes/1.json
   def update
+
+    @consignment = Consignment.new(
+      :from_location_id => Tape.find_by_id(params[:id]).location.id,
+      :to_location_id => params[:tape][:location],
+      :in_transit => false
+    )
+    @consignment.save
+
+    @content = Content.new(
+      :tape_id => params[:id],
+      :consignment_id => @consignment.id,
+    )
+    @content.save
+
     respond_to do |format|
       if @tape.update(tape_params)
         format.html { redirect_to @tape, notice: 'Tape was successfully updated.' }
@@ -63,6 +126,11 @@ class TapesController < ApplicationController
       format.html { redirect_to tapes_url }
       format.json { head :no_content }
     end
+  end
+
+  def import
+    Tape.import(params[:file])
+    redirect_to root_url, success: "Tapes Imported"
   end
 
   private

@@ -16,7 +16,7 @@ $(document).ready(function() {
 		});
 
 		if(window.exists != 1){
-			addTape();	
+			addTape();
 		}
 		window.exists = 0;
 	});
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
 function addTape(){
 	if ($( '#tape' ).val() != ""){
-			
+
 		var tape = $( '#tape' ).val();
 		var tapes = $( '#tapes' )[0];
 		var option = document.createElement("option");
@@ -95,7 +95,7 @@ function createTape(tape_ref, customer){
 	$.ajax({
 		url: "/tapes",
 		type: "POST",
-		data: { 
+		data: {
 			tape: {
 				reference: tape_ref,
 				customer_id: customer

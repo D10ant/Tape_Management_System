@@ -7,20 +7,18 @@
       %th Location
       %th Customer
       %th History
+      %th Edit
+      %th Delete
 
   %tbody
     -@tapes.each do |tape|
       %tr
         %td= tape.reference
-        -if tape.consignments.count != 0
-          -if tape.consignments.order(updated_at: :desc).first.in_transit == true
-            %td In Transit
-          -else
-            %td= tape.consignments.order(updated_at: :desc).first.to_location.location
-        -else
-          %td Unassigned
+        %td= tape.location.location
         %td= tape.customer.name
         %td= link_to "Tape History", "/tapes/#{tape.id}/history"
+        %td= link_to 'Edit', edit_tape_path(tape)
+        %td= link_to 'Destroy', tape, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 

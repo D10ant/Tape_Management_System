@@ -1,0 +1,21 @@
+=form_for @tape do |f|
+  %div.field
+    =f.label :reference
+    =f.text_field :reference
+
+  %div.field
+    =f.label :customer_id
+    -customer_hash = Hash.new(0)
+    -@customers.each do |customer|
+      -customer_hash[customer.name] = customer.id
+    =f.select(:customer_id, customer_hash)
+
+  %div.field
+    =f.label :location
+    -location_hash = Hash.new(0)
+    -@locations.each do |location|
+      -location_hash[location.location] = location.id
+    =f.select :location, location_hash, :selected => @tape.location.id
+
+  %div.actions
+    =f.submit

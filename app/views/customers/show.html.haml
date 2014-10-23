@@ -1,0 +1,19 @@
+%p#notice= notice
+
+%p
+  %strong Customer tla:
+  = @customer.tla
+
+%p
+  %strong Customer name:
+  = @customer.name
+
+%p
+  %strong Tapes:
+  - @tapes.each do | tape |
+    %br
+    = tape.reference
+
+= link_to 'Edit', edit_customer_path(@customer)
+|
+= link_to 'Back', customers_path
