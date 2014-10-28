@@ -46,4 +46,12 @@ class Tape < ActiveRecord::Base
 		else raise "Unknown file type: #{file.original_filename}"
 	  end
 	end
+
+	def self.search(search)
+	  if search
+	    where('reference LIKE ?', "%#{search}%")
+	  else
+	    scoped
+	  end
+	end
 end

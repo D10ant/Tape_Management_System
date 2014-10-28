@@ -1,5 +1,12 @@
 %h1 Tape Locations
 
+= form_tag tapes_path, :method => 'get', :id => "tapes_search" do
+  %p
+  %div
+    = text_field_tag :search, params[:search], class: 'span2 search-query'
+    = submit_tag "Search", :name => nil, class: 'btn'
+
+
 %table.table.table-striped
   %thead
     %tr
@@ -21,5 +28,5 @@
         %td= link_to 'Destroy', tape, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
-
+=will_paginate @tapes
 =link_to 'New Tape', new_tape_path, :class => 'btn btn-primary'

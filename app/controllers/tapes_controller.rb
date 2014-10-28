@@ -6,7 +6,8 @@ class TapesController < ApplicationController
   # GET /tapes
   # GET /tapes.json
   def index
-    @tapes = Tape.all
+  #  @tapes = Tape.all
+      @tapes = Tape.search(params[:search]).paginate(:per_page => 10, :page => params[:page])
   end
 
   # GET /tapes/1

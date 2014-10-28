@@ -60,6 +60,9 @@ gem 'debugger'
 #Soft deletes items
 gem "paranoia", "~> 2.0"
 
+#pagination gem
+gem 'will_paginate', '~> 3.0'
+
 #Acts_as_paranoid is used to soft delete tapes
 #gem 'acts_as_paranoid'
 
