@@ -34,9 +34,17 @@ class TapesController < ApplicationController
     Rails.logger.debug tape_params.inspect
     #@tape = Tape.new(tape_params)
 
-    params["tape"]["reference"].each do |reference|
-      unless reference == ''
-        @tape = Tape.new(:reference => reference, :customer_id => tape_params['customer_id'])
+    #!!TODO!! Improve this block of code
+    if params["tape"]["reference"].is_a?(Array) || params["tape"]["reference"].is_a?(Hash)
+      params["tape"]["reference"].each do |reference|
+        unless reference == ''
+          @tape = Tape.new(:reference => reference, :customer_id => tape_params['customer_id'])
+          @tape.save
+        end
+      end
+    else
+      unless params["tape"]["reference"] == ''
+        @tape = Tape.new(:reference => params["tape"]["reference"], :customer_id => tape_params['customer_id'])
         @tape.save
       end
     end

@@ -1,7 +1,7 @@
 class ConsignmentsController < ApplicationController
 	before_action :set_consignment, only: [:show, :edit, :update, :destroy]
 
-	def index 
+	def index
 		@consignments = Consignment.all
 		@location = Location.all
 		@tapes = Tape.all
@@ -49,7 +49,7 @@ class ConsignmentsController < ApplicationController
 				render 'edit'
 			end
 		end
-		
+
 	end
 
 	def create
@@ -57,21 +57,18 @@ class ConsignmentsController < ApplicationController
 
 		@location = Location.all
 		@customer = Customer.all
-		
+
+		puts 'tapes = '
+		puts params
+
 		location_match = consignment_validation(params["tapes"])
 
 		@consignment.errors
 
-		#!!TODO!! Figure out a way to write this better. Not Dry. 
 		respond_to do |format|
-			if location_match != false
-				if @consignment.save
-					format.html { redirect_to consignments_path, success: "Consignment Successfully Created!" }
-					format.json { render action: 'show', status: :created, location: @consignment }
-				else
-					format.html { render action: 'new' }
-					format.json { render json: @consignment.errors, status: :unprocessable_entity }
-				end	
+			if location_match != false && @consignment.save
+				format.html { redirect_to consignments_path, success: "Consignment Successfully Created!" }
+				format.json { render action: 'show', status: :created, location: @consignment }
 			else
 				format.html { render action: 'new' }
 				format.json { render json: @consignment.errors, status: :unprocessable_entity }
@@ -142,16 +139,20 @@ class ConsignmentsController < ApplicationController
 		location_1 = @consignment.from_location.location.split(' - ')
 		location_2 = @consignment.to_location.location.split(' - ')
 
-		if location_1[0] == location_2[0]
+		unless location_1[0] == "Unassigned"
+			if location_1[0] == location_2[0]
+				@consignment.in_transit = false
+			else
+				@consignment.in_transit = true
+			end
+		else
 			@consignment.in_transit = false
-		else 
-			@consignment.in_transit = true
 		end
 
 		unless location_1[0] == location_2[0]
 			if @consignment.security_tag == ""
 				location_match = false
-				@consignment.errors.add(:security_tag, "cannot be blank when moving from sites.") 
+				@consignment.errors.add(:security_tag, "cannot be blank when moving from sites.")
 			end
 		end
 

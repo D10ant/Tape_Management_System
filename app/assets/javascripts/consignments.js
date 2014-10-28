@@ -101,8 +101,14 @@ function createTape(tape_ref, customer){
 				customer_id: customer
 			}
 		},
+		beforeSend: function(jqXHR, settings) {
+        jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+    },
 		success: function(data){
 			alert('Tape ' + tape_ref + ' successfully added');
-		}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert("Status: " + textStatus); alert("Error: " + errorThrown);
+    }
 	});
 }
