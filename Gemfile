@@ -61,7 +61,7 @@ gem 'debugger'
 gem "paranoia", "~> 2.0"
 
 #pagination gem
-gem 'will_paginate', '~> 3.0'
+gem 'will_paginate', '~> 3.0.5'
 
 gem 'execjs', '2.2'
 

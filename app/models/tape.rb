@@ -51,7 +51,7 @@ class Tape < ActiveRecord::Base
 	  if search
 	    where('reference LIKE ?', "%#{search}%")
 	  else
-	    scoped
+	    self.all
 	  end
 	end
 end
