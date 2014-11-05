@@ -30,7 +30,6 @@
         <td><%= consignment.in_transit %></td>
         <td><%= link_to 'Details', consignment %></td>
         <td><%= link_to 'Check in consignment', edit_consignment_path(consignment) %></td>
-        <td><%= link_to 'Destroy', consignment, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger'%></td>
       </tr>
     <% end %>
   </tbody>
