@@ -1,27 +1,41 @@
-<% tape_details = Hash.new { |hash, key| hash[key] = Hash.new} %>
-<% @tape.consignments.order('created_at desc').each do |consignment| %>
-	<% consignment.audits.order('created_at desc').each do |audit| %>
-		<% audit.audited_changes.each do |key,value| %>
-			<% removed = 0 %>
-			<% inserted = 0 %>
-			<% if key == :to_location_id %>
-				<% if @locations.find_by_id(value).location.split(' - ')[1] == 'Tape Library' %>
-					<% inserted = 1 %>
+<% tape_details = Hash.new { |hash, key| hash[key] = Hash.new {|hash, key| hash[key] = Hash.new}} %>
+<% @tapes.each do |tape| %>
+	<% tape.consignments.order('created_at desc').each do |consignment| %>
+		<% consignment.audits.order('created_at desc').each do |audit| %>
+			<% audit.audited_changes.each do |key, value| %>
+				<% removed = 0 %>
+				<% inserted = 0 %>
+				<% if key == :to_location_id %>
+					<% if @locations.find_by_id(value).location.split(' - ')[1] == 'Tape Library' %>
+						<% inserted = 1.0 %>
+					<% end %>
+				<% elsif key == :from_location_id %>
+					<% if @locations.find_by_id(value).location.split(' - ')[1] == 'Tape Library' %>
+						<% removed = 1.0 %>
+					<% end %>
 				<% end %>
-			<% elsif key == :from_location_id %>
-				<% if @locations.find_by_id(value).location.split(' - ')[1] == 'Tape Library' %>
-					<% removed = 1 %>
+				<% if !tape_details[audit.created_at.to_date][tape.reference]['inserted'] %>
+					<% tape_details[audit.created_at.to_date][tape.reference]['inserted'] = 0 %>
+				<% else %>
+					<% tape_details[audit.created_at.to_date][tape.reference]['inserted'] += inserted %>
 				<% end %>
+				<% if !tape_details[audit.created_at.to_date][tape.reference]['removed'] %>
+					<% tape_details[audit.created_at.to_date][tape.reference]['removed'] = 0 %>
+				<% else %>
+					<% tape_details[audit.created_at.to_date][tape.reference]['removed'] += removed %>
+				<% end %>
+				<% tape_details[audit.created_at.to_date][tape.reference]['customer_name'] = tape.customer.name %>
+				<% tape_details[audit.created_at.to_date][tape.reference]['customer_id'] = tape.customer.id %>
+				<% tape_details[audit.created_at.to_date][tape.reference]['total'] = tape_details[audit.created_at.to_date][tape.reference]['removed'] + tape_details[audit.created_at.to_date][tape.reference]['inserted'] %>
+				<% tape_details[audit.created_at.to_date][tape.reference]['reference'] = tape.reference %>
+				<% tape_details[audit.created_at.to_date][tape.reference]['hours_used'] = tape_details[audit.created_at.to_date][tape.reference]['total'] / 2 %>
 			<% end %>
-			<% tape_details[audit.created_at.to_date]['inserted'] = inserted %>
-			<% tape_details[audit.created_at.to_date]['removed'] = removed %>
-			<% tape_details[audit.created_at.to_date]['customer_name'] = @tape.customer.name %>
-			<% tape_details[audit.created_at.to_date]['customer_id'] = @tape.customer.id %>
-			<% tape_details[audit.created_at.to_date]['total'] = tape_details[audit.created_at.to_date]['removed'] + tape_details[audit.created_at.to_date]['inserted'] %>
 		<% end %>
 	<% end %>
 <% end %>
-CustomerID, CustomerName, Date, Removed, Inserted, Total, TotalRemoteHandsUsed, TotalHoursUsed
-<% tape_details.each do |date_key, value| %>
-	<%= raw "#{tape_details[date_key]['customer_id']}, #{tape_details[date_key]['customer_name']}, #{date_key}, #{tape_details[date_key]['removed']}, #{tape_details[date_key]['inserted']}, #{tape_details[date_key]['total']}" %>
-<% end %> 
+CustomerID, CustomerName, Tape Reference, Date, Removed, Inserted, Total, TotalRemoteHandsUsed, TotalHoursUsed
+<% tape_details.each do |date_key, tape_hash| %>
+	<% tape_hash.each do |tape_reference, value| %>
+		<%= raw "#{tape_details[date_key][tape_reference]['customer_id']}, #{tape_details[date_key][tape_reference]['customer_name']}, #{tape_details[date_key][tape_reference]['reference']}, #{date_key}, #{tape_details[date_key][tape_reference]['removed']}, #{tape_details[date_key][tape_reference]['inserted']}, #{tape_details[date_key][tape_reference]['total']}, #{tape_details[date_key][tape_reference]['hours_used']} " %>
+	<% end %>
+<% end %>
