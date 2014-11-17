@@ -1,6 +1,6 @@
-class AuditsController < ApplicationController
-	def index
-		@tapes = Tape.where(:customer_id => params[:customer_id])
+class HistoryController < ApplicationController
+  def index
+		@tape = Tape.find(params[:tape_id])
 		@locations = Location.all
 
 		respond_to do |format|
@@ -12,5 +12,4 @@ class AuditsController < ApplicationController
 	def show
 
 	end
-
 end

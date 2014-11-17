@@ -6,6 +6,12 @@ BarcodeScanner::Application.routes.draw do
   resources :customers
 
   resources :tapes do
+    resources :history, controller: 'history'
+    collection { post :import }
+    collection { get  :deleted }
+  end
+
+  resources :customers do
     resources :history, controller: 'audits'
     collection { post :import }
     collection { get  :deleted }

@@ -16,7 +16,8 @@
       <tr>
         <td><%= customer.tla %></td>
         <td><%= customer.name %></td>
-        <td><%= link_to 'Show', customer %></td>
+        <td><%= link_to 'Tapes', customer %></td>
+        <td><%= link_to 'Tapes Movement History', customer_history_index_path(:format => :html, :customer_id => customer) %></td>
         <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
         <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
