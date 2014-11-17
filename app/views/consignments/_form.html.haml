@@ -1,0 +1,58 @@
+=form_for(@consignment, :html => { :class => 'form-horizontal', :role => 'form', :onsubmit => 'return validateForm()'}) do |f|
+  =if @consignment.errors.any?
+    %div#error_explanation
+      %h2
+        =pluralize(@consignment.errors.count, "error")
+        prohibited this consignment from being saved.
+      %ul
+        -@consignment.errors.full_messages.each do |msg|
+          %li= msg
+  =error
+
+  =options = options_from_collection_for_select(@location, 'id', 'location')
+
+  %div.form-group
+    %div.col-sm-10
+      =f.label :to_location
+      =f.select(:to_location_id, options, {}, :class => 'form-control', :onChange => "javascript: transitStatus();")
+
+  %div.form-group
+    %div.col-sm-10
+      =f.label :tapes
+      =text_field_tag('tape', '', :class => 'form-control', :'data-validate' => '/consignments/checktape')
+
+  %div.form-group
+    %div.col-sm-10
+      =select_tag(:tapes, options_for_select([]), {:class => 'form-control', :multiple => true})
+
+  %br
+  %div.form-group
+    %div.col-sm-10
+      =link_to 'Remove Tape', '#', :class => 'btn btn-sm btn-danger', :id => 'remove_tape'
+
+  %br
+  %div.form-group
+    %div.col-sm-10
+      =f.label :security_tag
+      =f.text_field :security_tag, :class => 'form-control'
+
+  %div.form-group
+    %div.col-sm-10
+      =f.hidden_field :in_transit
+
+  %div.form-group
+    %div.col-sm-10
+      =f.submit :class => 'btn btn-primary'
+
+%a#unknown-tape.btn.btn-primary.btn-lg{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button", :style => "display:none"}
+%div#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  %div.modal-dialog
+    %div.modal-content
+      %div.modal-header
+        %h3#myModalLabel.modal-title Tape Doesn't Exist
+      %div.modal-body
+        %p Tape doesn't exist. If you would like to add it to the database, please select a customer and click 'Save Changes'.
+        = select_tag "customer", options_from_collection_for_select(@customer, "id", "name")
+      %div.modal-footer
+        %button#tape-add-no.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+        %button#tape-add.btn.btn-primary{"data-dismiss" => "modal"} Save changes
